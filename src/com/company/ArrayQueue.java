@@ -12,6 +12,11 @@ public class ArrayQueue {
         start = end = 0;
     }
 
+    //инвариант цикла - размер очереди не превышает длину массива,
+    //длина массива кратна 10,
+    //0 <= start, end < длина массива
+    //предусловие - элемент существует
+    //постусловие - queue[(длина массива + end - 1) mod длина массива] равно элементу
     public void enqueue(Object element){
         if (element == null){
             return;
@@ -31,12 +36,18 @@ public class ArrayQueue {
         queue[end] = element;
         end = (end+1) % queue.length;
     }
+
+    //предусловие - элемент существует
+    //постусловие - queue[start] возвращено
     public Object element(){
         if (size == 0){
             return null;
         }
         return (queue[start]);
     }
+
+    //предусловие - размер очереди больше 0
+    //постусловие - queue[start] возвращено, размер уменьшился на 1
     public Object dequeue(){
         Object res = null;
         if (size > 0){
@@ -46,16 +57,26 @@ public class ArrayQueue {
         }
         return res;
     }
+
+    //постусловие - size возвращено
     public int size(){
         return size;
     }
+
+    //постусловие - верность пустоты очереди возвращена
     public boolean isEmpty(){
         return size == 0;
     }
+
+
+    //постусловие - размер очереди 0,
+    //размер массива 10, start и end равны 0
     public void clear(){
         size = start = end = 0;
+        queue = new Object[10];
     }
     public static void test(){
+        System.out.println("Тестирование ArrayQueue");
         ArrayQueue q = new ArrayQueue();
         Integer el = (Integer)q.dequeue();
         System.out.println("size = " + q.size());
